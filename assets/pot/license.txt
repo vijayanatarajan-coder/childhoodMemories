@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pottery Pots
+* source:	https://sketchfab.com/3d-models/pottery-pots-d2b8a4292cf2434aa97e5c228fa8cee4
+* author:	Pratibha (https://sketchfab.com/Camay)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pottery Pots" (https://sketchfab.com/3d-models/pottery-pots-d2b8a4292cf2434aa97e5c228fa8cee4) by Pratibha (https://sketchfab.com/Camay) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
