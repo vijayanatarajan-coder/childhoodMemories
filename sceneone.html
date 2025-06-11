@@ -2,9 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Painting room</title>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-rounded@1.0.2/aframe-rounded.min.js"></script>
+    <title>Childhood Painting room</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
+
     <style>
       body {
         margin: 0;
@@ -15,24 +16,21 @@
     <a-scene background="color: #F4E99B">
       <!-- Rig with camera and hand controllers -->
       <a-entity id="rig" position="0 1.6 5">
-        <a-camera wasd-controls look-controls>
-          <a-cursor></a-cursor>
-        </a-camera>
+        <!-- Camera -->
+        <a-camera> <a-cursor></a-cursor> </a-camera>
 
         <!-- Left hand controller -->
         <a-entity
-          hand-controls="hand: left"
+          laser-controls="hand: left"
           raycaster="objects: .clickable"
-          line="color: blue"
-          class="clickable"
+          line="color: #FF0000"
         ></a-entity>
 
         <!-- Right hand controller -->
         <a-entity
-          hand-controls="hand: right"
+          laser-controls="hand: right"
           raycaster="objects: .clickable"
-          line="color: red"
-          class="clickable"
+          line="color: #FF0000"
         ></a-entity>
       </a-entity>
 
@@ -88,7 +86,7 @@
           width="10"
           height="3"
           depth="0.1"
-          color="#cccccc"
+          color="#9B9B9B"
         ></a-box>
 
         <a-box
@@ -343,20 +341,19 @@
         ></a-box>
       </a-entity>
 
-      <!-- crayan model with clickable and shaking animation -->
+      <!-- models-->
       <a-entity
         gltf-model="#crayanModel"
-        class="clickable"
         position="-2.0 1 -1.0"
         scale="0.3 0.3 0.3"
-        animation__shake="property: rotation; dur: 300; easing: easeInOutSine; loop: 4; dir: alternate; from: 0 -97.67 0; to: 0 -87.67 0; startEvents: triggerShake"
-        shake-on-click
       ></a-entity>
       <a-entity
         gltf-model="#tabelModel"
         position="-2.0 0 -1.0"
         scale="2.2 2.2 2.2"
         rotation="0 45 0"
+        class="clickable"
+        hover-color
       ></a-entity>
       <a-entity
         gltf-model="#plantModel"
@@ -369,6 +366,8 @@
         position="-4 0 0"
         scale="0.2 0.2 0.2"
         rotation="0 90 0"
+        class="clickable"
+        shake-on-click
       ></a-entity>
       <a-entity
         gltf-model="#bookModel"
@@ -483,16 +482,60 @@
     <script>
       AFRAME.registerComponent("shake-on-click", {
         init: function () {
-          this.el.addEventListener("click", () => {
-            this.el.emit("triggerShake");
+          const el = this.el;
+          el.addEventListener("click", () => {
+            el.setAttribute("animation__shake", {
+              property: "rotation",
+              to: "0 30 0",
+              dir: "alternate",
+              dur: 300,
+              loop: 3,
+              easing: "easeInOutSine",
+            });
           });
         },
       });
+
+      AFRAME.registerComponent("hover-color", {
+        schema: {
+          color: { type: "color", default: "#ffffff" },
+        },
+        init: function () {
+          const el = this.el;
+          let originalMaterials = [];
+
+          el.addEventListener("model-loaded", () => {
+            const mesh = el.getObject3D("mesh");
+            if (!mesh) return;
+
+            mesh.traverse((node) => {
+              if (node.isMesh) {
+                originalMaterials.push({
+                  node: node,
+                  material: node.material.clone(),
+                });
+              }
+            });
+
+            el.addEventListener("mouseenter", () => {
+              originalMaterials.forEach(({ node }) => {
+                node.material.color.set(this.data.color);
+              });
+            });
+
+            el.addEventListener("mouseleave", () => {
+              originalMaterials.forEach(({ node, material }) => {
+                node.material.color.copy(material.color);
+              });
+            });
+          });
+        },
+      });
+
       AFRAME.registerComponent("open-other-scene", {
         init: function () {
           this.el.addEventListener("click", function () {
-            // Replace 'otherScene.html' with your target scene URL
-            window.location.href = "index.html";
+            window.location.href = "scenetwo.html";
           });
         },
       });
