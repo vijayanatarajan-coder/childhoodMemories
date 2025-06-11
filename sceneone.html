@@ -14,10 +14,37 @@
   </head>
   <body>
     <a-scene background="color: #F4E99B">
+      <!-- Sky with color -->
+      <a-sky color="#87CEEB"></a-sky>
+      <!-- Light blue sky -->
+
+      <!-- Background panel for better text visibility (optional) -->
+      <a-plane
+        position="-6 6 -5"
+        width="6"
+        height="1.5"
+        color="#000000"
+        opacity="0.5"
+      >
+      </a-plane>
+
+      <!-- Floating text note -->
+      <a-entity
+        position="-6 6 -4.99"
+        text="value: This is my childhood painting room. I loved painting here as a kid, and this VR space brings back those joyful memories. Click the painting board to explore another world!; 
+        color: #ffffff; 
+        width: 5.5; 
+        align: left; 
+        font: mozillavr"
+      >
+      </a-entity>
+
       <!-- Rig with camera and hand controllers -->
       <a-entity id="rig" position="0 1.6 5">
         <!-- Camera -->
-        <a-camera> <a-cursor></a-cursor> </a-camera>
+        <a-camera>
+          <a-cursor raycaster="objects: .clickable"></a-cursor>
+        </a-camera>
 
         <!-- Left hand controller -->
         <a-entity
