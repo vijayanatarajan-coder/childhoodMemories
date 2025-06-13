@@ -35,7 +35,7 @@ Custom animations and interactive logic using A-Frame components.
 How to Run
 Clone or download the project folder.
 
-Open sceneone.html in a WebXR-enabled browser (e.g., Chrome).
+Open index.html in a WebXR-enabled browser (e.g., Chrome).
 
 Click the VR button to enter headset mode or explore using your mouse.
 
